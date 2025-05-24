@@ -1,6 +1,8 @@
 local current_fg = colours.toBlit(colours.white)
 local current_bg = colours.toBlit(colours.black)
 
+local current_monitor, current_monitor_peripheral, redirected = "native", term.native(), false
+
 local function createBlankScreen()
 	local screen = {
 		["chars"] = {},
@@ -8,7 +10,7 @@ local function createBlankScreen()
 		["bg"] = {},
 		["modified"] = false
 	}
-	local cols, rows = term.getSize()
+	local cols, rows = current_monitor_peripheral.getSize()
 
 	for i = 1, rows do
 		screen["chars"][i] = {}
@@ -146,16 +148,79 @@ local function clear()
 	current_screen = primary_screen
 end
 
+local function redirect(monitor)
+	if monitor == "native" then
+		current_monitor = "native"
+		current_screen = primary_screen
+		current_monitor_peripheral = term.native()
+		redirected = false
+	else
+		if type(monitor) == "string" then
+			monitor = monitor.wrap(monitor)
+		end
+		if monitor == nil then
+			error("Output.redirect: Peripheral not found")
+		end
+
+		local type = peripheral.getType(monitor)
+		if type == "monitor" then
+			current_monitor = peripheral.getName(monitor)
+			current_monitor_peripheral = monitor
+		elseif type == "Create_DisplayLink" then
+			current_monitor = peripheral.getName(monitor)
+			current_monitor_peripheral = monitor
+		else
+			error("Output.redirect: Invalid peripheral")
+		end
+
+		redirected = true
+	end
+end
+
+local function setTextScale(scale)
+	if redirected then
+		if current_monitor_peripheral.setTextScale ~= nil then
+			current_monitor_peripheral.setTextScale(scale)
+		else
+			error("Output.setTextScale: Monitor does not support this function")
+		end
+	else
+		error("Output.setTextScale: Not redirected to a monitor")
+	end
+end
+
+local function getTextScale()
+	if redirected then
+		if current_monitor_peripheral.getTextScale ~= nil then
+			return current_monitor_peripheral.getTextScale()
+		else
+			error("Output.getTextScale: Monitor does not support this function")
+		end
+	else
+		error("Output.getTextScale: Not redirected to a monitor")
+	end
+end
+
 local function update()
 	if current_screen["modified"] then
 		for i = 1, #current_screen["chars"] do
-			term.setCursorPos(1, i)
-			term.blit(
-				table.concat(current_screen["chars"][i]),
-				table.concat(current_screen["fg"][i]),
-				table.concat(current_screen["bg"][i])
-			)
+			current_monitor_peripheral.setCursorPos(1, i)
+			if current_monitor_peripheral.blit ~= nil then
+				current_monitor_peripheral.blit(
+					table.concat(current_screen["chars"][i]),
+					table.concat(current_screen["fg"][i]),
+					table.concat(current_screen["bg"][i])
+				)
+			else
+				current_monitor_peripheral.write(
+					table.concat(current_screen["chars"][i])
+				)
+			end
 		end
+		if current_monitor_peripheral.update ~= nil then
+			current_monitor_peripheral.update()
+		end
+
 		current_screen["modified"] = false
 
 		if current_screen_name == "primary" then
@@ -179,6 +244,9 @@ return {
 	getBackgroundColor = getBackgroundColour,
 	setBackgroundColour = setBackgroundColour,
 	setBackgroundColor = setBackgroundColour,
+	redirect = redirect,
+	setTextScale = setTextScale,
+	getTextScale = getTextScale,
 	write = write,
 	blit = blit,
 	clear = clear,

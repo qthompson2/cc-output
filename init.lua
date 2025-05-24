@@ -269,6 +269,36 @@ local function clear()
 	end
 end
 
+local function scroll(n)
+	if n == nil then
+		error("Output.scroll: number expected for first argument, got nil")
+	end
+
+	local new_screen = createBlankScreen()
+	if n > 0 then
+		for i = 1 + n, #screen["chars"] do
+			new_screen["chars"][i - n] = screen["chars"][i]
+			new_screen["fg"][i - n] = screen["fg"][i]
+			new_screen["bg"][i - n] = screen["bg"][i]
+		end
+	else
+		for i = 1 + n, #screen["chars"] do
+			local index = #screen["chars"] + 1 - i
+
+			new_screen["chars"][index - n] = screen["chars"][index]
+			new_screen["fg"][index - n] = screen["fg"][index]
+			new_screen["bg"][index - n] = screen["bg"][index]
+		end
+	end
+
+	screen = new_screen
+	screen["modified"] = true
+
+	if settings["update_style"] == update_style.on_modified and screen["modified"] then
+		update()
+	end
+end
+
 return {
 	setCursorPos = setCursorPos,
 	getCursorPos = getCursorPos,
@@ -288,6 +318,7 @@ return {
 	blit = blit,
 	clear = clear,
 	clearLine = clearLine,
+	scroll = scroll,
 	update = update,
 	config = {
 		setUpdateStyle = setUpdateStyle,

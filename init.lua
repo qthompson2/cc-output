@@ -160,7 +160,7 @@ local function redirect(monitor)
 		redirected = false
 	else
 		if type(monitor) == "string" then
-			monitor = monitor.wrap(monitor)
+			monitor = peripheral.wrap(monitor)
 		end
 		if monitor == nil then
 			error("Output.redirect: Peripheral not found")

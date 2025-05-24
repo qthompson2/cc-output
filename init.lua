@@ -10,7 +10,17 @@ local function createBlankScreen()
 		["bg"] = {},
 		["modified"] = false
 	}
-	local rows, cols = current_monitor_peripheral.getSize()
+	local rows, cols = nil, nil
+
+	if redirected then
+		if peripheral.getType(current_monitor_peripheral) == "Create_DisplayLink" then -- Create_DisplayLinks return getSize in reverse order
+			rows, cols = current_monitor_peripheral.getSize()
+		else
+			cols, rows = current_monitor_peripheral.getSize()
+		end
+	else
+		cols, rows = current_monitor_peripheral.getSize()
+	end
 
 	for i = 1, rows do
 		screen["chars"][i] = {}

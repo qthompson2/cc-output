@@ -60,6 +60,10 @@ local function getBackgroundColour()
 	return colours.fromBlit(current_bg)
 end
 
+local function getSize()
+	return current_monitor_peripheral.getSize()
+end
+
 local function write(str)
 	local x, y = getCursorPos()
 	local current_row = current_screen["chars"][y]
@@ -244,6 +248,7 @@ return {
 	getBackgroundColor = getBackgroundColour,
 	setBackgroundColour = setBackgroundColour,
 	setBackgroundColor = setBackgroundColour,
+	getSize = getSize,
 	redirect = redirect,
 	setTextScale = setTextScale,
 	getTextScale = getTextScale,

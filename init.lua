@@ -10,7 +10,7 @@ local function createBlankScreen()
 		["bg"] = {},
 		["modified"] = false
 	}
-	local cols, rows = current_monitor_peripheral.getSize()
+	local rows, cols = current_monitor_peripheral.getSize()
 
 	for i = 1, rows do
 		screen["chars"][i] = {}

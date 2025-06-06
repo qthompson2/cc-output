@@ -79,6 +79,10 @@ local function getSize()
 	return current_monitor_peripheral.getSize()
 end
 
+local function isColour()
+	current_monitor_peripheral.isColour()
+end
+
 local function redirect(monitor)
 	if monitor == "native" then
 		current_monitor = "native"
@@ -299,6 +303,22 @@ local function scroll(n)
 	end
 end
 
+local function setCursorBlink(blink)
+	if current_monitor_peripheral.setCursorBlink ~= nil then
+		current_monitor_peripheral.setCursorBlink(blink)
+	else
+		error("Output.setCursorBlink: Monitor does not support this function")
+	end
+end
+
+local function getCursorBlink()
+	if current_monitor_peripheral.getCursorBlink ~= nil then
+		return current_monitor_peripheral.getCursorBlink()
+	else
+		error("Output.getCursorBlink: Monitor does not support this function")
+	end
+end
+
 return {
 	setCursorPos = setCursorPos,
 	getCursorPos = getCursorPos,
@@ -310,6 +330,8 @@ return {
 	getBackgroundColor = getBackgroundColour,
 	setBackgroundColour = setBackgroundColour,
 	setBackgroundColor = setBackgroundColour,
+	isColour = isColour,
+	isColor = isColour,
 	getSize = getSize,
 	redirect = redirect,
 	setTextScale = setTextScale,
@@ -320,6 +342,8 @@ return {
 	clearLine = clearLine,
 	scroll = scroll,
 	update = update,
+	setCursorBlink = setCursorBlink,
+	getCursorBlink = getCursorBlink,
 	config = {
 		setUpdateStyle = setUpdateStyle,
 		getUpdateStyle = getUpdateStyle,

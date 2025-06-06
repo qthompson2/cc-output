@@ -146,6 +146,18 @@ local function getUpdateStyle()
 	return settings["update_style"]
 end
 
+local function setPaletteColour(index, colour)
+	if current_monitor_peripheral.setPaletteColour ~= nil then
+		current_monitor_peripheral.setPaletteColour(index, colour)
+	else
+		error("Output.setPaletteColour: Monitor does not support this function")
+	end
+end
+
+local function getPaletteColour(index)
+	return current_monitor_peripheral.getPaletteColour(index)
+end
+
 local function update()
 	if screen["modified"] then
 		for i = 1, #screen["chars"] do
@@ -332,6 +344,10 @@ return {
 	setBackgroundColor = setBackgroundColour,
 	isColour = isColour,
 	isColor = isColour,
+	setPaletteColour = setPaletteColour,
+	setPaletteColor = setPaletteColour,
+	getPaletteColour = getPaletteColour,
+	getPaletteColor = getPaletteColour,
 	getSize = getSize,
 	redirect = redirect,
 	setTextScale = setTextScale,

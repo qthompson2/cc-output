@@ -76,7 +76,15 @@ local function getBackgroundColour()
 end
 
 local function getSize()
-	return current_monitor_peripheral.getSize()
+	if redirected then
+		if peripheral.getType(current_monitor_peripheral) == "Create_DisplayLink" then -- Create_DisplayLinks return getSize in reverse order
+			return current_monitor_peripheral.getSize()
+		else
+			return current_monitor_peripheral.getSize()
+		end
+	else
+		return term.native().getSize()
+	end
 end
 
 local function isColour()

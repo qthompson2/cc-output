@@ -78,7 +78,8 @@ end
 local function getSize()
 	if redirected then
 		if peripheral.getType(current_monitor_peripheral) == "Create_DisplayLink" then -- Create_DisplayLinks return getSize in reverse order
-			return current_monitor_peripheral.getSize()
+			local rows, cols = current_monitor_peripheral.getSize()
+			return cols, rows
 		else
 			return current_monitor_peripheral.getSize()
 		end

@@ -14,6 +14,10 @@ Sets the position of the cursor to the provided x and y values.
 
 ## Colour
 
+	isColour() or isColor()
+
+Returns a boolean representing whether the current display peripheral supports colour.
+
 	getTextColour() or getTextColor()
 
 Returns the current text colour.
@@ -30,6 +34,13 @@ Returns the current background colour.
 
 Sets the current background colour to the provided value.
 
+	getPaletteColour(index) or getPaletteColor(index)
+
+Returns the current palette for a specific colour.
+
+	setPaletteColour(...) or setPaletteColor(...)
+	
+Sets the palette for a specific colour.
 ## Display Size
 
 	getSize()
@@ -77,3 +88,9 @@ Outputs all changes to the current monitor.
 	redirect(monitor)
 
 Changes the current monitor. `monitor` can be either a string or a peripheral table. If `monitor` == "native" the current monitor will be redirected back to the original computer.
+
+## Misc
+	
+	isSupported(function_name)
+
+Returns a boolean representing whether the current display peripheral has a function with a name that matches `function_name`.

@@ -152,9 +152,9 @@ local function applySetPaletteColour(t)
 		error("applySetPaletteColour: bad argument #1 (function expected for t.isSupported, got " .. type(t.isSupported) .. ")")
 	end
 
-	local function setPaletteColour(index, color)
+	local function setPaletteColour(...)
 		if t.isSupported("setPaletteColour") then
-			t._current_peripheral.setPaletteColour(index, color)
+			t._current_peripheral.setPaletteColour(...)
 		else
 			error("Output.setPaletteColour: function not supported")
 		end

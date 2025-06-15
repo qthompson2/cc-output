@@ -44,7 +44,7 @@ end
 
 local function applySetCursorPos(t)
 	if type(t.isSupported) ~= "function" then
-		_internal_error("applySetCursorPos: bad argument #1 (function expected for t.isSupported, got " .. type(t.isSupported) .. ")")
+		error("applySetCursorPos: bad argument #1 (function expected for t.isSupported, got " .. type(t.isSupported) .. ")")
 	end
 
 	t.setCursorPos = function(x, y)
@@ -64,7 +64,7 @@ end
 
 local function applySetCursorBlink(t)
 	if type(t.isSupported) ~= "function" then
-		_internal_error("applySetCursorBlink: bad argument #1 (function expected for t.isSupported, got " .. type(t.isSupported) .. ")")
+		error("applySetCursorBlink: bad argument #1 (function expected for t.isSupported, got " .. type(t.isSupported) .. ")")
 	end
 
 	t.setCursorBlink = function(blink)
@@ -78,7 +78,7 @@ end
 
 local function applyGetCursorBlink(t)
 	if type(t.isSupported) ~= "function" then
-		_internal_error("applyGetCursorBlink: bad argument #1 (function expected for t.isSupported, got " .. type(t.isSupported) .. ")")
+		error("applyGetCursorBlink: bad argument #1 (function expected for t.isSupported, got " .. type(t.isSupported) .. ")")
 	end
 
 	t.getCursorBlink = function()
@@ -107,7 +107,7 @@ end
 
 local function applyIsColour(t)
 	if type(t.isSupported) ~= "function" then
-		_internal_error("applyIsColour: bad argument #1 (function expected for t.isSupported, got " .. type(t.isSupported) .. ")")
+		error("applyIsColour: bad argument #1 (function expected for t.isSupported, got " .. type(t.isSupported) .. ")")
 	end
 
 	local function isColour()
@@ -157,7 +157,7 @@ end
 
 local function applySetPaletteColour(t)
 	if type(t.isSupported) ~= "function" then
-		_internal_error("applySetPaletteColour: bad argument #1 (function expected for t.isSupported, got " .. type(t.isSupported) .. ")")
+		error("applySetPaletteColour: bad argument #1 (function expected for t.isSupported, got " .. type(t.isSupported) .. ")")
 	end
 
 	local function setPaletteColour(...)
@@ -192,7 +192,7 @@ end
 
 local function applyGetPaletteColour(t)
 	if type(t.isSupported) ~= "function" then
-		_internal_error("applyGetPaletteColour: bad argument #1 (function expected for t.isSupported, got " .. type(t.isSupported) .. ")")
+		error("applyGetPaletteColour: bad argument #1 (function expected for t.isSupported, got " .. type(t.isSupported) .. ")")
 	end
 
 	local function getPaletteColour(index)
@@ -209,7 +209,7 @@ end
 
 local function applySetTextScale(t)
 	if type(t.isSupported) ~= "function" then
-		_internal_error("applySetTextScale: bad argument #1 (function expected for t.isSupported, got " .. type(t.isSupported) .. ")")
+		error("applySetTextScale: bad argument #1 (function expected for t.isSupported, got " .. type(t.isSupported) .. ")")
 	end
 
 	t.setTextScale = function(scale)
@@ -241,17 +241,17 @@ end
 
 local function applyUpdate(t)
 	if type(t.isSupported) ~= "function" then
-		_internal_error("applyUpdate: bad argument #1 (function expected for t.isSupported, got " .. type(t.isSupported) .. ")")
+		error("applyUpdate: bad argument #1 (function expected for t.isSupported, got " .. type(t.isSupported) .. ")")
 	elseif type(t._current_peripheral) ~= "table" then
-		_internal_error("applyUpdate: bad argument #1 (table expected for t._current_peripheral, got " .. type(t._current_peripheral) .. ")")
+		error("applyUpdate: bad argument #1 (table expected for t._current_peripheral, got " .. type(t._current_peripheral) .. ")")
 	elseif type(t["_modified"]) ~= "boolean" then
-		_internal_error("applyUpdate: bad argument #1 (boolean expected for t._modified, got " .. type(t._modified) .. ")")
+		error("applyUpdate: bad argument #1 (boolean expected for t._modified, got " .. type(t._modified) .. ")")
 	elseif type(t["_chars"]) ~= "table" then
-		_internal_error("applyUpdate: bad argument #1 (table expected for t._chars, got " .. type(t._chars) .. ")")
+		error("applyUpdate: bad argument #1 (table expected for t._chars, got " .. type(t._chars) .. ")")
 	elseif type(t["_fg"]) ~= "table" then
-		_internal_error("applyUpdate: bad argument #1 (table expected for t._fg, got " .. type(t._fg) .. ")")
+		error("applyUpdate: bad argument #1 (table expected for t._fg, got " .. type(t._fg) .. ")")
 	elseif type(t["_bg"]) ~= "table" then
-		_internal_error("applyUpdate: bad argument #1 (table expected for t._bg, got " .. type(t._bg) .. ")")
+		error("applyUpdate: bad argument #1 (table expected for t._bg, got " .. type(t._bg) .. ")")
 	end
 
 	t.update = function()
@@ -290,17 +290,17 @@ end
 
 local function applyWrite(t)
 	if type(t.getCursorPos) ~= "function" then
-		_internal_error("applyWrite: bad argument #1 (function expected for t.getCursorPos, got " .. type(t.getCursorPos) .. ")")
+		error("applyWrite: bad argument #1 (function expected for t.getCursorPos, got " .. type(t.getCursorPos) .. ")")
 	elseif type(t.setCursorPos) ~= "function" then
-		_internal_error("applyWrite: bad argument #1 (function expected for t.setCursorPos, got " .. type(t.setCursorPos) .. ")")
+		error("applyWrite: bad argument #1 (function expected for t.setCursorPos, got " .. type(t.setCursorPos) .. ")")
 	elseif type(t["_chars"]) ~= "table" then
-		_internal_error("applyWrite: bad argument #1 (table expected for t._chars, got " .. type(t._chars) .. ")")
+		error("applyWrite: bad argument #1 (table expected for t._chars, got " .. type(t._chars) .. ")")
 	elseif type(t["_fg"]) ~= "table" then
-		_internal_error("applyWrite: bad argument #1 (table expected for t._fg, got " .. type(t._fg) .. ")")
+		error("applyWrite: bad argument #1 (table expected for t._fg, got " .. type(t._fg) .. ")")
 	elseif type(t["_bg"]) ~= "table" then
-		_internal_error("applyWrite: bad argument #1 (table expected for t._bg, got " .. type(t._bg) .. ")")
+		error("applyWrite: bad argument #1 (table expected for t._bg, got " .. type(t._bg) .. ")")
 	elseif type(t["_modified"]) ~= "boolean" then
-		_internal_error("applyWrite: bad argument #1 (boolean expected for t._modified, got " .. type(t._modified) .. ")")
+		error("applyWrite: bad argument #1 (boolean expected for t._modified, got " .. type(t._modified) .. ")")
 	end
 
 	t.write = function(text)
@@ -340,17 +340,17 @@ end
 
 local function applyBlit(t)
 	if type(t.getCursorPos) ~= "function" then
-		_internal_error("applyBlit: bad argument #1 (function expected for t.getCursorPos, got " .. type(t.getCursorPos) .. ")")
+		error("applyBlit: bad argument #1 (function expected for t.getCursorPos, got " .. type(t.getCursorPos) .. ")")
 	elseif type(t.setCursorPos) ~= "function" then
-		_internal_error("applyBlit: bad argument #1 (function expected for t.setCursorPos, got " .. type(t.setCursorPos) .. ")")
+		error("applyBlit: bad argument #1 (function expected for t.setCursorPos, got " .. type(t.setCursorPos) .. ")")
 	elseif type(t["_chars"]) ~= "table" then
-		_internal_error("applyBlit: bad argument #1 (table expected for t._chars, got " .. type(t._chars) .. ")")
+		error("applyBlit: bad argument #1 (table expected for t._chars, got " .. type(t._chars) .. ")")
 	elseif type(t["_fg"]) ~= "table" then
-		_internal_error("applyBlit: bad argument #1 (table expected for t._fg, got " .. type(t._fg) .. ")")
+		error("applyBlit: bad argument #1 (table expected for t._fg, got " .. type(t._fg) .. ")")
 	elseif type(t["_bg"]) ~= "table" then
-		_internal_error("applyBlit: bad argument #1 (table expected for t._bg, got " .. type(t._bg) .. ")")
+		error("applyBlit: bad argument #1 (table expected for t._bg, got " .. type(t._bg) .. ")")
 	elseif type(t["_modified"]) ~= "boolean" then
-		_internal_error("applyBlit: bad argument #1 (boolean expected for t._modified, got " .. type(t._modified) .. ")")
+		error("applyBlit: bad argument #1 (boolean expected for t._modified, got " .. type(t._modified) .. ")")
 	end
 
 	t.blit = function(text, fg, bg)
@@ -400,13 +400,13 @@ end
 
 local function applyClearLine(t)
 	if type(t["_chars"]) ~= "table" then
-		_internal_error("applyClearLine: bad argument #1 (table expected for t._chars, got " .. type(t._chars) .. ")")
+		error("applyClearLine: bad argument #1 (table expected for t._chars, got " .. type(t._chars) .. ")")
 	elseif type(t["_fg"]) ~= "table" then
-		_internal_error("applyClearLine: bad argument #1 (table expected for t._fg, got " .. type(t._fg) .. ")")
+		error("applyClearLine: bad argument #1 (table expected for t._fg, got " .. type(t._fg) .. ")")
 	elseif type(t["_bg"]) ~= "table" then
-		_internal_error("applyClearLine: bad argument #1 (table expected for t._bg, got " .. type(t._bg) .. ")")
+		error("applyClearLine: bad argument #1 (table expected for t._bg, got " .. type(t._bg) .. ")")
 	elseif type(t.getSize) ~= "function" then
-		_internal_error("applyClearLine: bad argument #1 (function expected for t.getSize, got " .. type(t.getSize) .. ")")
+		error("applyClearLine: bad argument #1 (function expected for t.getSize, got " .. type(t.getSize) .. ")")
 	end
 
 	t.clearLine = function()
@@ -437,13 +437,13 @@ end
 
 local function applyClear(t)
 	if type(t["_chars"]) ~= "table" then
-		_internal_error("applyClear: bad argument #1 (table expected for t._chars, got " .. type(t._chars) .. ")")
+		error("applyClear: bad argument #1 (table expected for t._chars, got " .. type(t._chars) .. ")")
 	elseif type(t["_fg"]) ~= "table" then
-		_internal_error("applyClear: bad argument #1 (table expected for t._fg, got " .. type(t._fg) .. ")")
+		error("applyClear: bad argument #1 (table expected for t._fg, got " .. type(t._fg) .. ")")
 	elseif type(t["_bg"]) ~= "table" then
-		_internal_error("applyClear: bad argument #1 (table expected for t._bg, got " .. type(t._bg) .. ")")
+		error("applyClear: bad argument #1 (table expected for t._bg, got " .. type(t._bg) .. ")")
 	elseif type(t.getSize) ~= "function" then
-		_internal_error("applyClear: bad argument #1 (function expected for t.getSize, got " .. type(t.getSize) .. ")")
+		error("applyClear: bad argument #1 (function expected for t.getSize, got " .. type(t.getSize) .. ")")
 	end
 
 	t.clear = function()
@@ -465,13 +465,13 @@ end
 
 local function applyScroll(t)
 	if type(t.getSize) ~= "function" then
-		_internal_error("applyScroll: bad argument #1 (function expected for t.getSize, got " .. type(t.getSize) .. ")")
+		error("applyScroll: bad argument #1 (function expected for t.getSize, got " .. type(t.getSize) .. ")")
 	elseif type(t["_chars"]) ~= "table" then
-		_internal_error("applyScroll: bad argument #1 (table expected for t._chars, got " .. type(t._chars) .. ")")
+		error("applyScroll: bad argument #1 (table expected for t._chars, got " .. type(t._chars) .. ")")
 	elseif type(t["_fg"]) ~= "table" then
-		_internal_error("applyScroll: bad argument #1 (table expected for t._fg, got " .. type(t._fg) .. ")")
+		error("applyScroll: bad argument #1 (table expected for t._fg, got " .. type(t._fg) .. ")")
 	elseif type(t["_bg"]) ~= "table" then
-		_internal_error("applyScroll: bad argument #1 (table expected for t._bg, got " .. type(t._bg) .. ")")
+		error("applyScroll: bad argument #1 (table expected for t._bg, got " .. type(t._bg) .. ")")
 	end
 
 	t.scroll = function(n)
@@ -535,9 +535,9 @@ end
 
 local function applyCurrent(t)
 	if type(t.isSupported) ~= "function" then
-		_internal_error("applyCurrent: bad argument #1 (function expected for t.isSupported, got " .. type(t.isSupported) .. ")")
+		error("applyCurrent: bad argument #1 (function expected for t.isSupported, got " .. type(t.isSupported) .. ")")
 	elseif type(t._current_peripheral) ~= "table" then
-		_internal_error("applyCurrent: bad argument #1 (table expected for t._current_peripheral, got " .. type(t._current_peripheral) .. ")")
+		error("applyCurrent: bad argument #1 (table expected for t._current_peripheral, got " .. type(t._current_peripheral) .. ")")
 	end
 
 	t.current = function()
@@ -547,9 +547,9 @@ end
 
 local function applyRedirect(t)
 	if type(t.getSize) ~= "function" then
-		_internal_error("applyRedirect: bad argument #1 (function expected for t.getSize, got " .. type(t.getSize) .. ")")
+		error("applyRedirect: bad argument #1 (function expected for t.getSize, got " .. type(t.getSize) .. ")")
 	elseif type(t.setCursorPos) ~= "function" then
-		_internal_error("applyRedirect: bad argument #1 (function expected for t.setCursorPos, got " .. type(t.setCursorPos) .. ")")
+		error("applyRedirect: bad argument #1 (function expected for t.setCursorPos, got " .. type(t.setCursorPos) .. ")")
 	end
 
 	t.redirect = function(new_peripheral)

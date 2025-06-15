@@ -33,5 +33,6 @@ OutputFunctions.applyClearLine(Native)
 OutputFunctions.applyClear(Native)
 OutputFunctions.applyRedirect(Native)
 OutputFunctions.applyCurrent(Native)
+OutputFunctions.applyConfig(Native)
 
 return Native

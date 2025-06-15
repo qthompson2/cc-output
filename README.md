@@ -89,6 +89,17 @@ Outputs all changes to the current monitor.
 
 Changes the current monitor. `monitor` can be either a string or a peripheral table. If `monitor` == "native" the current monitor will be redirected back to the original computer.
 
+## Configuration
+
+	config.setUpdateOnModified(enabled)
+
+If enabled is true, `write`, `blit`, `scroll`, `clear`, and `clearLine` will call `update` after modifying the screen.
+Otherwise, `update` will need to be called manually to show changes on the display.
+By default, this is false.
+
+	config.getUpdateOnModified()
+
+Returns true if functions that modify the screen (`write`, `blit`, `scroll`, `clear`, and `clearLine`) call update. Returns false if update must be called manually.
 ## Misc
 	
 	isSupported(function_name)

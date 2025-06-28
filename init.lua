@@ -1,4 +1,5 @@
-OutputFunctions = require("bin.cc-output.output")
+local current_directory = debug.getinfo(1).short_src
+OutputFunctions = loadfile(fs.getDir(current_directory) .. "/output.lua")()
 
 Native = {}
 Native._cursor_x, Native._cursor_y = 1, 1

@@ -1,4 +1,4 @@
-local current_directory = debug.getinfo(1).short_src
+local current_directory = debug.getinfo(1).source:sub(2) -- get source, removes the leading '@'
 OutputFunctionsLoader = loadfile(fs.getDir(current_directory) .. "/output.lua")
 
 if not OutputFunctionsLoader then

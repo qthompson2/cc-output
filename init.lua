@@ -1,45 +1,27 @@
-local current_directory = debug.getinfo(1).source:sub(2) -- get source, removes the leading '@'
-OutputFunctionsLoader = loadfile(fs.getDir(current_directory) .. "/output.lua")
+local cols, rows = term.getSize()
 
-if not OutputFunctionsLoader then
-	error("Failed to load data from " .. fs.getDir(current_directory) .. "/output.lua")
+local screen = window.create(term.current(), 1, 1, cols, rows, false)
+
+local output = {}
+
+for func_name, func in pairs(screen) do
+	if type(func) == "function" then
+		output[func_name] = function(...)
+			local result = {func(...)}
+			return table.unpack(result)
+		end
+	end
 end
 
-OutputFunctions = OutputFunctionsLoader()
+function output.isSupported(func_name)
+	return screen[func_name] ~= nil
+end
 
-Native = {}
-Native._cursor_x, Native._cursor_y = 1, 1
-Native._redirected = false
-Native._current_peripheral = term.native()
-Native._current_peripheral.setCursorPos(1, 1)
-Native["_modified"] = false
-Native_current_fg = colours.toBlit(term.getTextColor())
-Native_current_bg = colours.toBlit(term.getBackgroundColor())
-Native["_chars"], Native["_fg"], Native["_bg"] = OutputFunctions.createGrid(term.getSize())
+-- Needs implementation of improved redirect for display_link support (display_link_adapter.lua)
 
-OutputFunctions.applyIsSupported(Native)
-OutputFunctions.applyIsColour(Native)
-OutputFunctions.applyGetSize(Native)
-OutputFunctions.applyGetCursorPos(Native)
-OutputFunctions.applyGetCursorBlink(Native)
-OutputFunctions.applyGetTextColour(Native)
-OutputFunctions.applyGetBackgroundColour(Native)
-OutputFunctions.applyGetTextScale(Native)
-OutputFunctions.applyGetPaletteColour(Native)
-OutputFunctions.applySetTextColour(Native)
-OutputFunctions.applySetBackgroundColour(Native)
-OutputFunctions.applySetCursorPos(Native)
-OutputFunctions.applySetCursorBlink(Native)
-OutputFunctions.applySetTextScale(Native)
-OutputFunctions.applySetPaletteColour(Native)
-OutputFunctions.applyUpdate(Native)
-OutputFunctions.applyWrite(Native)
-OutputFunctions.applyBlit(Native)
-OutputFunctions.applyScroll(Native)
-OutputFunctions.applyClearLine(Native)
-OutputFunctions.applyClear(Native)
-OutputFunctions.applyRedirect(Native)
-OutputFunctions.applyCurrent(Native)
-OutputFunctions.applyConfig(Native)
+function output.update()
+	screen.setVisible(true)
+	screen.setVisible(false)
+end
 
-return Native
+return output

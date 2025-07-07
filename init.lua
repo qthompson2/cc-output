@@ -17,8 +17,6 @@ function output.isSupported(func_name)
 	return screen[func_name] ~= nil
 end
 
--- Needs implementation of improved redirect for display_link support (display_link_adapter.lua)
-
 function output.update()
 	screen.setVisible(true)
 	screen.setVisible(false)

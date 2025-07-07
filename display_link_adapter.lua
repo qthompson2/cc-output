@@ -1,5 +1,23 @@
 local prev_connections = {}
 
+NON_APPLICABLE_FUNCTIONS = {
+	["getCursorBlink"] = function() return false end,
+	["setCursorBlink"] = function() end,
+	["getTextColour"] = function() return colours.white end,
+	["getTextColor"] = function() return colours.white end,
+	["setTextColour"] = function(colour) end,
+	["setTextColor"] = function(color) end,
+	["getBackgroundColour"] = function() return colours.black end,
+	["getBackgroundColor"] = function() return colours.black end,
+	["setBackgroundColour"] = function(colour) end,
+	["setBackgroundColor"] = function(color) end,
+	["getPaletteColour"] = function(colour) return colours[colour] or colours.white end,
+	["getPaletteColor"] = function(color) return colors[color] or colours.white end,
+	["setPaletteColour"] = function(colour, value) end,
+	["setPaletteColor"] = function(color, value) end,
+	["blit"] = function(...) end,
+}
+
 local function generateGridLine(w)
 	local line = {}
 
@@ -110,6 +128,10 @@ local function wrapLink(link_name)
 			link_peripheral.setCursorPos(1, i)
 			link_peripheral.write(table.concat(grid[i], ""))
 		end
+	end
+
+	for func_name, func in pairs(NON_APPLICABLE_FUNCTIONS) do
+		wrapped[func_name] = func
 	end
 
 	prev_connections[link_name] = wrapped
